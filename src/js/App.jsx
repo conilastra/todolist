@@ -13,11 +13,9 @@ class App extends React.Component {
     };
 
     this.newInput = this.newInput.bind(this);
-    this.submitItem = this.submitItem.bind(this);
     this.keyPressed = this.keyPressed.bind(this);
     this.clearInput = this.clearInput.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
-    //this.counterMsg = this.counterMsg.bind(this);
   }
 
   newInput(e) {
@@ -26,15 +24,13 @@ class App extends React.Component {
 
   keyPressed(e) {
     if (e.key === "Enter") {
-      this.submitItem();
       this.setState({ input: e.target.value });
-      this.setState({ input: "" });
-    }
-  }
 
-  submitItem() {
-    if (this.state.input !== "") {
-      this.setState({ list: [...this.state.list, this.state.input] });
+      if (this.state.input !== "") {
+        this.setState({ list: [...this.state.list, this.state.input] });
+      }
+
+      this.setState({ input: "" });
     }
   }
 
@@ -59,7 +55,7 @@ class App extends React.Component {
             value={this.state.input}
           />
           <ListItem list={this.state.list} delete={this.deleteItem} />
-          <Counter quantity={this.state.list.lengt} />
+          <Counter quantity={this.state.list.length} />
         </section>
         <div className="stack-box-1"></div>
         <div className="stack-box-2"></div>
