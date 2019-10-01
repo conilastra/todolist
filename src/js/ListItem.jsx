@@ -4,16 +4,16 @@ import "../css/ListItem.css";
 class ListItem extends React.Component {
   render() {
     return (
-      <>
+      <ul className="list">
         {this.props.list.map((item, i) => (
-          <div className="list-item" key={i}>
+          <li className="list-item" key={i}>
             <span className="delete" onClick={e => this.props.delete(e, i)}>
               x
             </span>
             {item}
-          </div>
+          </li>
         ))}
-      </>
+      </ul>
     );
   }
 }
