@@ -1,6 +1,8 @@
 import React from "react";
-import "./App.css";
-import ListItem from "./Todo";
+import "../css/App.css";
+import ListItem from "./ListItem";
+import Input from "./Input";
+import Counter from "./Counter";
 
 class App extends React.Component {
   constructor(props) {
@@ -41,16 +43,13 @@ class App extends React.Component {
       <main>
         <h1>todos</h1>
         <section>
-          <input
-            className="list-item"
-            type="text"
+          <Input
             onChange={this.newInput}
             onKeyPress={this.keyPressed}
             value={this.state.input}
-            placeholder="What needs to be done?"
           />
           <ListItem list={this.state.list} />
-          <div className="counter">Add new items</div>
+          <Counter quantity={this.state.list.length} />
         </section>
       </main>
     );

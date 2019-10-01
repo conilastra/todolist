@@ -1,0 +1,17 @@
+.list-item {
+  border-bottom: 1px solid rgb(241, 241, 241);
+  padding: 1rem 2rem;
+  font-size: 20px;
+  text-align: initial;
+  color: gray;
+  width: 100%;
+  background-color: white;
+  font-weight: 200;
+}
+
+.list-item:hover::after {
+  content: " \00D7";
+  position: relative;
+  float: right;
+  color: #fd9393;
+}
