@@ -9,9 +9,15 @@
   font-weight: 200;
 }
 
-.list-item:hover::after {
-  content: " \00D7";
+.list-item:hover span.delete {
   position: relative;
   float: right;
   color: #fd9393;
+  cursor: pointer;
+  display: block;
+}
+
+span.delete,
+.hidden {
+  display: none;
 }

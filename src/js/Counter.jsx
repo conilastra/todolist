@@ -2,12 +2,14 @@ import React from "react";
 import "../css/Counter.css";
 
 class Input extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    return <div className="counter">{this.props.quantity} item left</div>;
+    return (
+      <div className="counter">
+        {this.props.quantity > 0
+          ? `${this.props.quantity} item left` > 0
+          : "No tasks, add a task"}
+      </div>
+    );
   }
 }
 
