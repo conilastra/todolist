@@ -5,7 +5,7 @@ import Input from './Input';
 import Counter from './Counter';
 //import axios from 'axios';
 
-const url = 'https://assets.breatheco.de/apis/fake/todos/user/coni';
+const url = 'https://assets.breatheco.de/apis/fake/todos/user/hola';
 
 class App extends React.Component {
 	constructor(props) {
@@ -25,31 +25,14 @@ class App extends React.Component {
 		const response = await fetch(url);
 		const json = await response.json();
 
-		let data = await json.map((i) => i.label);
-		let list = this.state.list;
-		list = list.length !== 0 ? [ list, data ] : data;
-
+		let list = json;
+		console.log(list);
 		this.setState({ list });
 	}
 
 	newInput(e) {
 		this.setState({ input: e.target.value });
 	}
-
-	//OLD FORMULA
-	/* 	keyPressed(e) {
-		if (e.key === 'Enter') {
-			this.setState({ input: e.target.value });
-
-			if (this.state.input !== '') {
-				this.setState({ list: [ ...this.state.list, this.state.input ] });
-			}
-
-			this.setState({ input: '' });
-		}
-  } */
-
-	// NEW ATTEMPT
 
 	keyPressed = async (e) => {
 		let value = e.target.value;
@@ -59,16 +42,27 @@ class App extends React.Component {
 				this.setState({ list: [ ...this.state.list, this.state.input ] });
 			}
 
-			value = `{label: "${value}", done: false}`;
-			let list = this.state.list;
-			let body = list.map((i) => `{label: "${i}", done: false}`);
-			body = [ ...body, value ];
-			console.log(body);
+			value = { label: value, done: false };
+			let list = [ ...this.state.list, value ];
+			this.setState({ list });
+			console.log(list);
 
 			fetch(url, {
-				METHOD: 'PUT',
-				BODY: body
-			}).then((response) => response.json());
+				method: 'PUT',
+				body: JSON.stringify(list),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+				.then((resp) => {
+					return resp.json();
+				})
+				.then((data) => {
+					console.log(data);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
 
 			this.setState({ input: '' });
 		}
@@ -78,11 +72,31 @@ class App extends React.Component {
 		this.setState({ input: [] });
 	}
 
-	deleteItem(e, i) {
-		e.preventDefault();
-		this.state.list.splice(i, 1);
-		this.setState({ list: this.state.list });
+	deleteItem(item) {
+		let list = this.state.list.filter((i) => i.label !== item.label);
+		this.setState({ list });
+
+		fetch(url, {
+			method: 'PUT',
+			body: JSON.stringify(list),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then((resp) => {
+				return resp.json();
+			})
+			.then((data) => {
+				console.log(data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+
+		this.setState({ input: '' });
 	}
+
+	clearAll() {}
 
 	render() {
 		return (
